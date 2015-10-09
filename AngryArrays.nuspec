@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>AngryArrays</id>
+        <version>1.0.0-beta1</version>
+        <title>Angry Arrays (C# Source)</title>
+        <authors>Atif Aziz</authors>
+        <owners>Atif Aziz</owners>
+        <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+        <projectUrl>https://github.com/atifaziz/AngryArrays</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <copyright>Copyright &#169; 2015 Atif Aziz. All rights reserved.</copyright>
+        <description>Extension methods for mostly modifying arrays.</description>
+        <language>en-US</language>
+        <tags>array extensions</tags>
+        <releaseNotes>Initial release</releaseNotes>
+    </metadata>
+    <files>
+        <file src="COPYING.txt" target="COPYING.txt" />
+        <file src="AngryArrays.cs" target="src\AngryArrays.cs" />
+        <file src="bin\Release\AngryArrays.*"
+              target="lib\portable-net40+sl50+win+wpa81+wp80"
+              exclude="**\*.Tests.*" />
+    </files>
+</package>
