@@ -22,5 +22,14 @@ Append multiple items at the end of the array too:
     Console.WriteLine(string.Join(",", xs));
     // 1, 2, 3, 4, 5, 6, 7, 8
 
+## Split
+
+Removes a contiguous segment of items from an array identified by a starting
+index and count:
+
+    var xs = new[] { 1, 2, 3, 4, 5, 6, 8 }.Splice(3, 2);
+    Console.WriteLine(string.Join(",", xs));
+    // 1,2,3,6,7,8
+
 
   [jsarray]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array

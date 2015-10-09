@@ -20,6 +20,11 @@ namespace AngryArrays
 
     // ReSharper disable PartialTypeWithSinglePart
 
+    static class EmptyArray<T>
+    {
+        public static readonly T[] Value = new T[0];
+    }
+
     namespace Push
     {
         static partial class AngryArray
@@ -43,6 +48,32 @@ namespace AngryArrays
                 array.CopyTo(combined, 0);
                 items?.CopyTo(combined, array.Length);
                 return combined;
+            }
+        }
+    }
+
+    namespace Splice
+    {
+        static partial class AngryArray
+        {
+            public static T[] Splice<T>(this T[] array, int index, int count)
+            {
+                if (array == null) throw new ArgumentNullException(nameof(array));
+                if (index < 0) throw new ArgumentOutOfRangeException(nameof(index));
+                if (array.Length == 0)
+                    return array;
+                if (index >= array.Length || count == 0)
+                    return (T[]) array.Clone();
+                var index2 = index + count;
+                var length2 = Math.Max(array.Length - index2, 0);
+                var spliced = new T[Math.Max(index + length2, 0)];
+                if (spliced.Length > 0)
+                {
+                    Array.Copy(array, 0, spliced, 0, index);
+                    if (index2 < array.Length && length2 > 0)
+                        Array.Copy(array, index2, spliced, index, length2);
+                }
+                return spliced;
             }
         }
     }
