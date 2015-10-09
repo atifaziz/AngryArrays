@@ -17,7 +17,7 @@
         <releaseNotes>Initial release</releaseNotes>
     </metadata>
     <files>
-        <file src="Array.cs" target="content\App_Packages\AngryArrays" />
+        <file src="AngryArrays.cs" target="content\App_Packages\AngryArrays" />
         <file src="COPYING.txt" target="COPYING.txt" />
     </files>
 </package>
