@@ -22,7 +22,7 @@ Append multiple items at the end of the array too:
     Console.WriteLine(string.Join(",", xs));
     // 1, 2, 3, 4, 5, 6, 7, 8
 
-## Split
+## Splice
 
 Removes a contiguous segment of items from an array identified by a starting
 index and count:
