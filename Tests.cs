@@ -105,42 +105,46 @@ namespace AngryArrays.Tests
         {
             var e = Assert.Throws<ArgumentNullException>(() =>
                 // ReSharper disable once InvokeAsExtensionMethod
-                AngryArray.Splice((object[]) null, 0, 0));
+                AngryArray.Splice((object[]) null, 0, 0, delegate { return 0; }));
             Assert.AreEqual("array", e.ParamName);
         }
 
-        [TestCase("foo,bar,baz", "foo,bar,baz", 0, 0)]
-        [TestCase("foo,bar,baz", "foo,bar,baz", 1, 0)]
-        [TestCase("foo,bar,baz", "foo,bar,baz", 2, 0)]
-        [TestCase("foo,bar,baz", "foo,bar,baz", 3, 0)]
-        [TestCase("foo,bar,baz", "foo,bar,baz", 4, 0)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 0, 0)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 1, 0)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 2, 0)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 3, 0)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 4, 0)]
 
-        [TestCase("bar,baz"    , "foo,bar,baz", 0, 1)]
-        [TestCase("foo,baz"    , "foo,bar,baz", 1, 1)]
-        [TestCase("foo,bar"    , "foo,bar,baz", 2, 1)]
-        [TestCase("foo,bar,baz", "foo,bar,baz", 3, 1)]
-        [TestCase("foo,bar,baz", "foo,bar,baz", 4, 1)]
+        [TestCase("bar,baz"    , "foo"        , "foo,bar,baz", 0, 1)]
+        [TestCase("foo,baz"    , "bar"        , "foo,bar,baz", 1, 1)]
+        [TestCase("foo,bar"    , "baz"        , "foo,bar,baz", 2, 1)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 3, 1)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 4, 1)]
 
-        [TestCase("baz"        , "foo,bar,baz", 0, 2)]
-        [TestCase("foo"        , "foo,bar,baz", 1, 2)]
-        [TestCase("foo,bar"    , "foo,bar,baz", 2, 2)]
-        [TestCase("foo,bar,baz", "foo,bar,baz", 3, 2)]
-        [TestCase("foo,bar,baz", "foo,bar,baz", 4, 2)]
+        [TestCase("baz"        , "foo,bar"    , "foo,bar,baz", 0, 2)]
+        [TestCase("foo"        , "bar,baz"    , "foo,bar,baz", 1, 2)]
+        [TestCase("foo,bar"    , "baz"        , "foo,bar,baz", 2, 2)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 3, 2)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 4, 2)]
 
-        [TestCase(""           , "foo,bar,baz", 0, 3)]
-        [TestCase("foo"        , "foo,bar,baz", 1, 3)]
-        [TestCase("foo,bar"    , "foo,bar,baz", 2, 3)]
-        [TestCase("foo,bar,baz", "foo,bar,baz", 3, 3)]
-        [TestCase("foo,bar,baz", "foo,bar,baz", 4, 3)]
+        [TestCase(""           , "foo,bar,baz", "foo,bar,baz", 0, 3)]
+        [TestCase("foo"        , "bar,baz"    , "foo,bar,baz", 1, 3)]
+        [TestCase("foo,bar"    , "baz"        , "foo,bar,baz", 2, 3)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 3, 3)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 4, 3)]
 
-        [TestCase(""           , "foo,bar,baz", 0, 4)]
-        [TestCase("foo"        , "foo,bar,baz", 1, 4)]
-        [TestCase("foo,bar"    , "foo,bar,baz", 2, 4)]
-        [TestCase("foo,bar,baz", "foo,bar,baz", 3, 4)]
-        [TestCase("foo,bar,baz", "foo,bar,baz", 4, 4)]
+        [TestCase(""           , "foo,bar,baz", "foo,bar,baz", 0, 4)]
+        [TestCase("foo"        , "bar,baz"    , "foo,bar,baz", 1, 4)]
+        [TestCase("foo,bar"    , "baz"        , "foo,bar,baz", 2, 4)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 3, 4)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 4, 4)]
 
-        public void Splice(string expected, string input, int index, int count)
+        public void Splice(string expected, string deletions, string input, int index, int count)
         {
+            var r = Split(input).Splice(index, count, (s, d) => new { Spliced = s, Deleted = d });
+            Assert.AreEqual(Split(expected), r.Spliced);
+            Assert.AreEqual(Split(deletions), r.Deleted);
+
             Assert.AreEqual(Split(expected), Split(input).Splice(index, count));
         }
 
@@ -153,6 +157,5 @@ namespace AngryArrays.Tests
 
         static string[] Split(string s) =>
             !string.IsNullOrEmpty(s) ? s.Split(',') : new string[0];
-
     }
 }

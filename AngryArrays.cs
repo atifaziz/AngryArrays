@@ -56,24 +56,45 @@ namespace AngryArrays
     {
         static partial class AngryArray
         {
-            public static T[] Splice<T>(this T[] array, int index, int count)
+            public static T[] Splice<T>(this T[] array, int index, int count) =>
+                Splice(array, index, count, true, (s, _) => s);
+
+            public static TResult Splice<T, TResult>(this T[] array, int index, int count, Func<T[], T[], TResult> selector) =>
+                Splice(array, index, count, false, selector);
+
+            static TResult Splice<T, TResult>(T[] array, int index, int count, bool withoutDeletions, Func<T[], T[], TResult> selector)
             {
                 if (array == null) throw new ArgumentNullException(nameof(array));
                 if (index < 0) throw new ArgumentOutOfRangeException(nameof(index));
+
                 if (array.Length == 0)
-                    return array;
+                    return selector(array, EmptyArray<T>.Value);
+
                 if (index >= array.Length || count == 0)
-                    return (T[]) array.Clone();
+                    return selector((T[])array.Clone(), EmptyArray<T>.Value);
+
                 var index2 = index + count;
                 var length2 = Math.Max(array.Length - index2, 0);
-                var spliced = new T[Math.Max(index + length2, 0)];
-                if (spliced.Length > 0)
-                {
-                    Array.Copy(array, 0, spliced, 0, index);
-                    if (index2 < array.Length && length2 > 0)
-                        Array.Copy(array, index2, spliced, index, length2);
-                }
-                return spliced;
+                var splicedCount = Math.Max(index + length2, 0);
+
+                if (splicedCount == 0)
+                    return selector(EmptyArray<T>.Value, (T[])array.Clone());
+
+                var spliced = new T[splicedCount];
+                Array.Copy(array, 0, spliced, 0, index);
+                if (index2 < array.Length && length2 > 0)
+                    Array.Copy(array, index2, spliced, index, length2);
+
+                if (withoutDeletions)
+                    return selector(spliced, null);
+
+                var deletedCount = array.Length - spliced.Length;
+                if (deletedCount == 0)
+                    return selector(spliced, EmptyArray<T>.Value);
+
+                var deleted = new T[deletedCount];
+                Array.Copy(array, index, deleted, 0, deleted.Length);
+                return selector(spliced, deleted);
             }
         }
     }
