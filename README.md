@@ -50,5 +50,13 @@ meaning that many items from the end of the array:
     }));
     // { Spliced = 1,2,3,4,5,8, Deleted = 6,7 }
 
+Omit the count and everything until the end of the array will be removed:
+
+    Console.WriteLine(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Splice(-4, (s, d) => new
+    {
+        Spliced = string.Join(",", s),
+        Deleted = string.Join(",", d),
+    }));
+    // { Spliced = 1,2,3,4, Deleted = 5,6,7,8 }
 
   [jsarray]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array

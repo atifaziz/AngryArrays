@@ -56,8 +56,14 @@ namespace AngryArrays
     {
         static partial class AngryArray
         {
+            public static T[] Splice<T>(this T[] array, int index) =>
+                Splice(array, index, array.Length);
+
             public static T[] Splice<T>(this T[] array, int index, int count) =>
                 Splice(array, index, count, true, (s, _) => s);
+
+            public static TResult Splice<T, TResult>(this T[] array, int index, Func<T[], T[], TResult> selector) =>
+                Splice(array, index, array.Length, selector);
 
             public static TResult Splice<T, TResult>(this T[] array, int index, int count, Func<T[], T[], TResult> selector) =>
                 Splice(array, index, count, false, selector);

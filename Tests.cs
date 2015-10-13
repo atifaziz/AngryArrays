@@ -181,6 +181,25 @@ namespace AngryArrays.Tests
             Assert.AreEqual(Split(expected), Split(input).Splice(index, count));
         }
 
+        [TestCase(""           , "foo,bar,baz", "foo,bar,baz", 0)]
+        [TestCase("foo"        , "bar,baz"    , "foo,bar,baz", 1)]
+        [TestCase("foo,bar"    , "baz"        , "foo,bar,baz", 2)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 3)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 4)]
+
+        [TestCase("foo,bar"    , "baz"        , "foo,bar,baz", -1)]
+        [TestCase("foo"        , "bar,baz"    , "foo,bar,baz", -2)]
+        [TestCase(""           , "foo,bar,baz", "foo,bar,baz", -3)]
+
+        public void SpliceOverloadDefaultingCount(string expected, string deletions, string input, int index)
+        {
+            var r = Split(input).Splice(index, (s, d) => new { Spliced = s, Deleted = d });
+            Assert.AreEqual(Split(expected), r.Spliced);
+            Assert.AreEqual(Split(deletions), r.Deleted);
+
+            Assert.AreEqual(Split(expected), Split(input).Splice(index));
+        }
+
         [Test]
         public void SpliceOnEmptyReturnsSame()
         {
