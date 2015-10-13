@@ -109,6 +109,14 @@ namespace AngryArrays.Tests
             Assert.AreEqual("array", e.ParamName);
         }
 
+        [Test]
+        public void SpliceFailsWithNegativeCount()
+        {
+            var e = Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new int[42].Splice(0, -1, delegate { return 0; }));
+            Assert.AreEqual("count", e.ParamName);
+        }
+
         [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 0, 0)]
         [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 1, 0)]
         [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 2, 0)]

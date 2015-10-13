@@ -65,6 +65,7 @@ namespace AngryArrays
             static TResult Splice<T, TResult>(T[] array, int index, int count, bool withoutDeletions, Func<T[], T[], TResult> selector)
             {
                 if (array == null) throw new ArgumentNullException(nameof(array));
+                if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
 
                 if (array.Length == 0)
                     return selector(array, EmptyArray<T>.Value);
