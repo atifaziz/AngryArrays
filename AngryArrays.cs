@@ -65,10 +65,12 @@ namespace AngryArrays
             static TResult Splice<T, TResult>(T[] array, int index, int count, bool withoutDeletions, Func<T[], T[], TResult> selector)
             {
                 if (array == null) throw new ArgumentNullException(nameof(array));
-                if (index < 0) throw new ArgumentOutOfRangeException(nameof(index));
 
                 if (array.Length == 0)
                     return selector(array, EmptyArray<T>.Value);
+
+                if (index < 0)
+                    index = Math.Max(array.Length + index, 0);
 
                 if (index >= array.Length || count == 0)
                     return selector((T[])array.Clone(), EmptyArray<T>.Value);

@@ -139,6 +139,31 @@ namespace AngryArrays.Tests
         [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 3, 4)]
         [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 4, 4)]
 
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", -1, 0)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", -2, 0)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", -3, 0)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", -4, 0)]
+
+        [TestCase("foo,bar"    , "baz"        , "foo,bar,baz", -1, 1)]
+        [TestCase("foo,baz"    , "bar"        , "foo,bar,baz", -2, 1)]
+        [TestCase("bar,baz"    , "foo"        , "foo,bar,baz", -3, 1)]
+        [TestCase("bar,baz"    , "foo"        , "foo,bar,baz", -4, 1)]
+
+        [TestCase("foo,bar"    , "baz"        , "foo,bar,baz", -1, 2)]
+        [TestCase("foo"        , "bar,baz"    , "foo,bar,baz", -2, 2)]
+        [TestCase("baz"        , "foo,bar"    , "foo,bar,baz", -3, 2)]
+        [TestCase("baz"        , "foo,bar"    , "foo,bar,baz", -3, 2)]
+
+        [TestCase("foo,bar"    , "baz"        , "foo,bar,baz", -1, 3)]
+        [TestCase("foo"        , "bar,baz"    , "foo,bar,baz", -2, 3)]
+        [TestCase(""           , "foo,bar,baz", "foo,bar,baz", -3, 3)]
+        [TestCase(""           , "foo,bar,baz", "foo,bar,baz", -3, 3)]
+
+        [TestCase("foo,bar"    , "baz"        , "foo,bar,baz", -1, 4)]
+        [TestCase("foo"        , "bar,baz"    , "foo,bar,baz", -2, 4)]
+        [TestCase(""           , "foo,bar,baz", "foo,bar,baz", -3, 4)]
+        [TestCase(""           , "foo,bar,baz", "foo,bar,baz", -3, 4)]
+
         public void Splice(string expected, string deletions, string input, int index, int count)
         {
             var r = Split(input).Splice(index, count, (s, d) => new { Spliced = s, Deleted = d });
