@@ -31,7 +31,7 @@ index and count:
     Console.WriteLine(string.Join(",", xs));
     // 1,2,3,6,7,8
 
-You can also request  the spliced array as well as the removed segment:
+You can also request the spliced array as well as the removed segment:
 
     Console.WriteLine(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Splice(3, 2, (s, d) => new
     {
@@ -40,6 +40,15 @@ You can also request  the spliced array as well as the removed segment:
     }));
     // { Spliced = 1,2,3,6,7,8, Deleted = 4,5 }
 
+Like in JavaScript, `Splice` allows negative values for the start index, 
+meaning that many items from the end of the array:
+
+    Console.WriteLine(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Splice(-2, 2, (s, d) => new
+    {
+        Spliced = string.Join(",", s),
+        Deleted = string.Join(",", d),
+    }));
+    // { Spliced = 1,2,3,4,5,8, Deleted = 6,7 }
 
 
   [jsarray]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
