@@ -43,7 +43,7 @@ You can also request the spliced array as well as the removed segment:
 Like in JavaScript, `Splice` allows negative values for the start index, 
 meaning that many items from the end of the array:
 
-    Console.WriteLine(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Splice(-2, 2, (s, d) => new
+    Console.WriteLine(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Splice(-3, 2, (s, d) => new
     {
         Spliced = string.Join(",", s),
         Deleted = string.Join(",", d),
