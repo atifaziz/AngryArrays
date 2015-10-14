@@ -18,4 +18,5 @@ namespace AngryArrays
 {
     namespace Push   { public partial class AngryArray { } }
     namespace Splice { public partial class AngryArray { } }
+    namespace Copy   { public partial class AngryArray { } }
 }

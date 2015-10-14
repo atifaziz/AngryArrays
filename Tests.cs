@@ -211,3 +211,31 @@ namespace AngryArrays.Tests
             !string.IsNullOrEmpty(s) ? s.Split(',') : new string[0];
     }
 }
+
+namespace AngryArrays.Tests
+{
+    using System;
+    using NUnit.Framework;
+    using Copy;
+
+    [TestFixture]
+    public partial class Tests
+    {
+        [Test]
+        public void CopyFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                AngryArray.Copy((object[])null));
+            Assert.AreEqual("array", e.ParamName);
+        }
+
+        [Test]
+        public void Copy()
+        {
+            var xs = new[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+            var ys = xs.Copy();
+            Assert.IsFalse(ReferenceEquals(xs, ys));
+            Assert.AreEqual(xs, ys);
+        }
+    }
+}

@@ -54,6 +54,8 @@ namespace AngryArrays
 
     namespace Splice
     {
+        using Copy;
+
         static partial class AngryArray
         {
             public static T[] Splice<T>(this T[] array, int index) =>
@@ -80,14 +82,14 @@ namespace AngryArrays
                     index = Math.Max(array.Length + index, 0);
 
                 if (index >= array.Length || count == 0)
-                    return selector((T[])array.Clone(), EmptyArray<T>.Value);
+                    return selector(array.Copy(), EmptyArray<T>.Value);
 
                 var index2 = index + count;
                 var length2 = Math.Max(array.Length - index2, 0);
                 var splicedCount = Math.Max(index + length2, 0);
 
                 if (splicedCount == 0)
-                    return selector(EmptyArray<T>.Value, (T[])array.Clone());
+                    return selector(EmptyArray<T>.Value, array.Copy());
 
                 var spliced = new T[splicedCount];
                 Array.Copy(array, 0, spliced, 0, index);
@@ -104,6 +106,18 @@ namespace AngryArrays
                 var deleted = new T[deletedCount];
                 Array.Copy(array, index, deleted, 0, deleted.Length);
                 return selector(spliced, deleted);
+            }
+        }
+    }
+
+    namespace Copy
+    {
+        static partial class AngryArray
+        {
+            public static T[] Copy<T>(this T[] array)
+            {
+                if (array == null) throw new ArgumentNullException(nameof(array));
+                return (T[])array.Clone();
             }
         }
     }

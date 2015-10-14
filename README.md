@@ -59,4 +59,17 @@ Omit the count and everything until the end of the array will be removed:
     }));
     // { Spliced = 1,2,3,4, Deleted = 5,6,7,8 }
 
+## Copy
+
+It is just [`Array.Clone`][array-clone] with the return type same as the
+input array so a re-cast is not necessary:
+
+    var xs = new[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+    var ys = xs.Copy(); // ys is also int[], not object as with Array.Clone
+    Console.WriteLine(object.ReferenceEquals(xs, ys));
+    // False
+
+
+
   [jsarray]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+  [array-clone]: https://msdn.microsoft.com/en-us/library/system.array.clone%28v=vs.110%29.aspx
