@@ -91,6 +91,7 @@ namespace AngryArrays.Tests
         }
     }
 }
+
 namespace AngryArrays.Tests
 {
     using System;
@@ -236,6 +237,84 @@ namespace AngryArrays.Tests
             var ys = xs.Copy();
             Assert.IsFalse(ReferenceEquals(xs, ys));
             Assert.AreEqual(xs, ys);
+        }
+    }
+}
+
+namespace AngryArrays.Tests
+{
+    using System;
+    using NUnit.Framework;
+    using Unshift;
+
+    [TestFixture]
+    public partial class Tests
+    {
+        [Test]
+        public void UnshiftFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                AngryArray.Unshift(null, 42));
+            Assert.AreEqual("array", e.ParamName);
+        }
+
+        [Test]
+        public void UnshiftParamsFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                AngryArray.Unshift(null, 123, 456, 789));
+            Assert.AreEqual("array", e.ParamName);
+        }
+
+        [Test]
+        public void Unshift()
+        {
+            const int x = 123, y = 456, z = 789;
+            Assert.AreEqual(new[] { z, x, y }, new[] { x, y }.Unshift(z));
+        }
+
+        [Test]
+        public void UnshiftParams()
+        {
+            const int x = 123, y = 456, z = 789;
+
+            var empty = new int[0];
+            Assert.AreEqual(new[] { x }, empty.Unshift(new[] { x }));
+            Assert.AreEqual(new[] { x, y }, empty.Unshift(x, y));
+            Assert.AreEqual(new[] { x, y, z }, empty.Unshift(x, y, z));
+
+            Assert.AreEqual(new[] { y, x }, new[] { x }.Unshift(new[] { y }));
+            Assert.AreEqual(new[] { y, z, x }, new[] { x }.Unshift(y, z));
+
+            Assert.AreEqual(new[] { z, x, y }, new[] { x, y }.Unshift(new[] { z }));
+        }
+
+        [Test]
+        public void UnshiftCopiesEvenWithNoParams()
+        {
+            var xs = new[] { 1234, 456, 789 };
+            Assert.AreNotSame(xs, xs.Unshift());
+        }
+
+        [Test]
+        public void UnshiftWithNoParamsOnEmptyReturnsSame()
+        {
+            var empty = new int[0];
+            Assert.AreSame(empty, empty.Unshift());
+        }
+
+        [Test]
+        public void UnshiftCopiesEvenWithNullParams()
+        {
+            var xs = new[] { 1234, 456, 789 };
+            Assert.AreNotSame(xs, xs.Unshift(null));
+        }
+
+        [Test]
+        public void UnshiftWithNullParamsOnEmptyReturnsSame()
+        {
+            var empty = new int[0];
+            Assert.AreSame(empty, empty.Unshift(null));
         }
     }
 }

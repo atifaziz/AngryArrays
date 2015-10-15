@@ -25,6 +25,7 @@ namespace AngryArrays
         public static readonly T[] Value = new T[0];
     }
 
+
     namespace Push
     {
         static partial class AngryArray
@@ -47,6 +48,34 @@ namespace AngryArrays
                 var combined = new T[length];
                 array.CopyTo(combined, 0);
                 items?.CopyTo(combined, array.Length);
+                return combined;
+            }
+        }
+    }
+
+    namespace Unshift
+    {
+        static partial class AngryArray
+        {
+            public static T[] Unshift<T>(this T[] array, T item)
+            {
+                if (array == null) throw new ArgumentNullException(nameof(array));
+                var combined = new T[array.Length + 1];
+                array.CopyTo(combined, 1);
+                combined[0] = item;
+                return combined;
+            }
+
+            public static T[] Unshift<T>(this T[] array, params T[] items)
+            {
+                if (array == null) throw new ArgumentNullException(nameof(array));
+                var length2 = (items?.Length ?? 0);
+                var length = array.Length + length2;
+                if (length == 0)
+                    return array;
+                var combined = new T[length];
+                array.CopyTo(combined, length2);
+                items?.CopyTo(combined, 0);
                 return combined;
             }
         }

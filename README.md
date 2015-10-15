@@ -9,16 +9,31 @@ functions for arrays][jsarray].
 
 ## Push
 
-Appends a new item at the end of the array:
+Appends a new item at the end of an array:
 
     var xs = new[] { 1, 2, 3, 4, 5 }.Push(6);
     Console.WriteLine(string.Join(",", xs));
     // 1, 2, 3, 4, 5, 6
 
 
-Append multiple items at the end of the array too:
+Append multiple items at the end of an array too:
 
     var xs = new[] { 1, 2, 3, 4, 5 }.Push(6, 7, 8);
+    Console.WriteLine(string.Join(",", xs));
+    // 1, 2, 3, 4, 5, 6, 7, 8
+
+## Unshift
+
+Prepends a new item to the beginning of an array:
+
+    var xs = new[] { 1, 2, 3, 4, 5 }.Unshift(0);
+    Console.WriteLine(string.Join(",", xs));
+    // 0, 1, 2, 3, 4, 5
+
+
+Prepends multiple items to the beginning of an array too:
+
+    var xs = new[] { 4, 5, 6, 7, 8 }.Unshift(1, 2, 3);
     Console.WriteLine(string.Join(",", xs));
     // 1, 2, 3, 4, 5, 6, 7, 8
 
