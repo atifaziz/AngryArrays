@@ -318,3 +318,97 @@ namespace AngryArrays.Tests
         }
     }
 }
+
+namespace AngryArrays.Tests
+{
+    using System;
+    using NUnit.Framework;
+    using Pop;
+
+    [TestFixture]
+    public partial class Tests
+    {
+        [Test]
+        public void PopFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                // ReSharper disable once InvokeAsExtensionMethod
+                AngryArray.Pop((object[]) null, delegate { return 0; }));
+            Assert.AreEqual("array", e.ParamName);
+        }
+
+        [Test]
+        public void PopFailsWithNullSelector()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                // ReSharper disable once InvokeAsExtensionMethod
+                new int[0].Pop<int, object>(null));
+            Assert.AreEqual("selector", e.ParamName);
+        }
+
+        [Test]
+        public void PopWithCountFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                // ReSharper disable once InvokeAsExtensionMethod
+                AngryArray.Pop((object[]) null, 0, delegate { return 0; }));
+            Assert.AreEqual("array", e.ParamName);
+        }
+
+        [Test]
+        public void PopFailsWithNegativeCount()
+        {
+            var e = Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new int[42].Pop(-1, delegate { return 0; }));
+            Assert.AreEqual("count", e.ParamName);
+        }
+
+        [Test]
+        public void PopFailsWithEmptyArray()
+        {
+            Assert.Throws<InvalidOperationException>(() =>
+                new int[0].Pop(delegate { return 0; }));
+        }
+
+        [Test]
+        public void PopOne()
+        {
+            const int x = 123, y = 456, z = 789;
+            var array = new[] { x, y, z };
+
+            var pop1 = array.Pop((t, h) => new { Popped = t, Rest = h });
+            Assert.AreEqual(z, pop1.Popped);
+            Assert.AreEqual(new[] { x, y }, pop1.Rest);
+
+            var pop2 = pop1.Rest.Pop((t, h) => new { Popped = t, Rest = h });
+            Assert.AreEqual(y, pop2.Popped);
+            Assert.AreEqual(new[] { x }, pop2.Rest);
+
+            var pop3 = pop2.Rest.Pop((t, h) => new { Popped = t, Rest = h });
+            Assert.AreEqual(x, pop3.Popped);
+            Assert.AreEqual(0, pop3.Rest.Length);
+        }
+
+        [TestCase(""           , "foo,bar,baz", "foo,bar,baz", 0)]
+        [TestCase("baz"        , "foo,bar"    , "foo,bar,baz", 1)]
+        [TestCase("bar,baz"    , "foo"        , "foo,bar,baz", 2)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 3)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 4)]
+
+        public void Pop(string popped, string rest, string input, int count)
+        {
+            var r = Split(input).Pop(count, (t, h) => new { Popped = t, Rest = h });
+            Assert.AreEqual(Split(popped), r.Popped);
+            Assert.AreEqual(Split(rest), r.Rest);
+        }
+
+        [Test]
+        public void PopOnEmptyReturnsSame()
+        {
+            var empty = new int[0];
+            var result = empty.Pop(10, (tail, head) => new { Popped = tail, Rest = head });
+            Assert.AreEqual(0, result.Popped.Length);
+            Assert.AreEqual(0, result.Rest.Length);
+        }
+    }
+}

@@ -37,6 +37,29 @@ Prepends multiple items to the beginning of an array too:
     Console.WriteLine(string.Join(",", xs));
     // 1,2,3,4,5,6,7,8
 
+## Pop
+
+Removes the last item of an array and returns the popped item as well as the
+a copy of the original array without the popped item:
+
+    var xs = new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Pop((t, h) => new
+    {
+        Popped = t, Rest = string.Join(",", h)
+    });
+    Console.WriteLine(string.Join(",", xs));
+    // { Popped = 8, Rest = 1,2,3,4,5,6,7 }
+
+You can also use an overload to say how many items to pop:
+
+    var xs = new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Pop(4, (t, h) => new
+    {
+        Popped = string.Join(",", t),
+        Rest   = string.Join(",", h)
+    });
+    Console.WriteLine(string.Join(",", xs));
+    // { Popped = 5,6,7,8, Rest = 1,2,3,4 }
+
+
 ## Splice
 
 Removes a contiguous segment of items from an array identified by a starting

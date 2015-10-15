@@ -139,6 +139,30 @@ namespace AngryArrays
         }
     }
 
+    namespace Pop
+    {
+        using Splice;
+
+        static partial class AngryArray
+        {
+            public static TResult Pop<T, TResult>(this T[] array, Func<T, T[], TResult> selector)
+            {
+                if (array == null) throw new ArgumentNullException(nameof(array));
+                if (selector == null) throw new ArgumentNullException(nameof(selector));
+                if (array.Length == 0) throw new InvalidOperationException();
+                return array.Pop(1, (tail, head) => selector(tail[0], head));
+            }
+
+            public static TResult Pop<T, TResult>(this T[] array, int count, Func<T[], T[], TResult> selector)
+            {
+                if (array == null) throw new ArgumentNullException(nameof(array));
+                if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+                if (selector == null) throw new ArgumentNullException(nameof(selector));
+                return array.Splice(-count, count, (rest, popped) => selector(popped, rest));
+            }
+        }
+    }
+
     namespace Copy
     {
         static partial class AngryArray
