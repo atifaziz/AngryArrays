@@ -13,14 +13,14 @@ Appends a new item at the end of an array:
 
     var xs = new[] { 1, 2, 3, 4, 5 }.Push(6);
     Console.WriteLine(string.Join(",", xs));
-    // 1, 2, 3, 4, 5, 6
+    // 1,2,3,4,5,6
 
 
 Append multiple items at the end of an array too:
 
     var xs = new[] { 1, 2, 3, 4, 5 }.Push(6, 7, 8);
     Console.WriteLine(string.Join(",", xs));
-    // 1, 2, 3, 4, 5, 6, 7, 8
+    // 1,2,3,4,5,6,7,8
 
 ## Unshift
 
@@ -28,14 +28,14 @@ Prepends a new item to the beginning of an array:
 
     var xs = new[] { 1, 2, 3, 4, 5 }.Unshift(0);
     Console.WriteLine(string.Join(",", xs));
-    // 0, 1, 2, 3, 4, 5
+    // 0,1,2,3,4,5
 
 
 Prepends multiple items to the beginning of an array too:
 
     var xs = new[] { 4, 5, 6, 7, 8 }.Unshift(1, 2, 3);
     Console.WriteLine(string.Join(",", xs));
-    // 1, 2, 3, 4, 5, 6, 7, 8
+    // 1,2,3,4,5,6,7,8
 
 ## Splice
 
@@ -55,7 +55,7 @@ You can also request the spliced array as well as the removed segment:
     }));
     // { Spliced = 1,2,3,6,7,8, Deleted = 4,5 }
 
-Like in JavaScript, `Splice` allows negative values for the start index, 
+Like in JavaScript, `Splice` allows negative values for the start index,
 meaning that many items from the end of the array:
 
     Console.WriteLine(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Splice(-3, 2, (s, d) => new
