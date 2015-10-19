@@ -7,6 +7,17 @@ return the result.
 Many of the extension methods are inspired from like-named [JavaScript
 functions for arrays][jsarray].
 
+Each extension method along with its overloads lie in a separate namespace
+based on the name of the method so you only import what you use:
+
+    using AngryArrays.Copy;
+    using AngryArrays.Pop;
+    using AngryArrays.Push;
+    using AngryArrays.Shift;
+    using AngryArrays.Splice;
+    using AngryArrays.Unshift;
+
+
 ## Push
 
 Appends a new item at the end of an array:
