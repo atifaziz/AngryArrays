@@ -163,6 +163,30 @@ namespace AngryArrays
         }
     }
 
+    namespace Shift
+    {
+        using Splice;
+
+        static partial class AngryArray
+        {
+            public static TResult Shift<T, TResult>(this T[] array, Func<T, T[], TResult> selector)
+            {
+                if (array == null) throw new ArgumentNullException(nameof(array));
+                if (selector == null) throw new ArgumentNullException(nameof(selector));
+                if (array.Length == 0) throw new InvalidOperationException();
+                return array.Shift(1, (shifted, rest) => selector(shifted[0], rest));
+            }
+
+            public static TResult Shift<T, TResult>(this T[] array, int count, Func<T[], T[], TResult> selector)
+            {
+                if (array == null) throw new ArgumentNullException(nameof(array));
+                if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+                if (selector == null) throw new ArgumentNullException(nameof(selector));
+                return array.Splice(0, count, (rest, shifted) => selector(shifted, rest));
+            }
+        }
+    }
+
     namespace Copy
     {
         static partial class AngryArray

@@ -37,6 +37,17 @@ Prepends multiple items to the beginning of an array too:
     Console.WriteLine(string.Join(",", xs));
     // 1,2,3,4,5,6,7,8
 
+## Shift
+
+Removes the first item of an array:
+
+    var xs = new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Shift((h, t) => new
+    {
+        Shifted = h, Rest = string.Join(",", t)
+    });
+    Console.WriteLine(string.Join(",", xs));
+    // { Shifted = 1, Rest = 2,3,4,5,6,7,8 }
+
 ## Pop
 
 Removes the last item of an array and returns the popped item as well as the

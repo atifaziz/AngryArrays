@@ -20,5 +20,6 @@ namespace AngryArrays
     namespace Unshift { public partial class AngryArray { } }
     namespace Splice  { public partial class AngryArray { } }
     namespace Pop     { public partial class AngryArray { } }
+    namespace Shift   { public partial class AngryArray { } }
     namespace Copy    { public partial class AngryArray { } }
 }

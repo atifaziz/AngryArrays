@@ -412,3 +412,97 @@ namespace AngryArrays.Tests
         }
     }
 }
+
+namespace AngryArrays.Tests
+{
+    using System;
+    using NUnit.Framework;
+    using Shift;
+
+    [TestFixture]
+    public partial class Tests
+    {
+        [Test]
+        public void ShiftFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                // ReSharper disable once InvokeAsExtensionMethod
+                AngryArray.Shift((object[])null, delegate { return 0; }));
+            Assert.AreEqual("array", e.ParamName);
+        }
+
+        [Test]
+        public void ShiftFailsWithNullSelector()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                // ReSharper disable once InvokeAsExtensionMethod
+                new int[0].Shift<int, object>(null));
+            Assert.AreEqual("selector", e.ParamName);
+        }
+
+        [Test]
+        public void ShiftWithCountFailsWithNullThis()
+        {
+            var e = Assert.Throws<ArgumentNullException>(() =>
+                // ReSharper disable once InvokeAsExtensionMethod
+                AngryArray.Shift((object[])null, 0, delegate { return 0; }));
+            Assert.AreEqual("array", e.ParamName);
+        }
+
+        [Test]
+        public void ShiftFailsWithNegativeCount()
+        {
+            var e = Assert.Throws<ArgumentOutOfRangeException>(() =>
+                new int[42].Shift(-1, delegate { return 0; }));
+            Assert.AreEqual("count", e.ParamName);
+        }
+
+        [Test]
+        public void ShiftFailsWithEmptyArray()
+        {
+            Assert.Throws<InvalidOperationException>(() =>
+                new int[0].Shift(delegate { return 0; }));
+        }
+
+        [Test]
+        public void ShiftOne()
+        {
+            const int x = 123, y = 456, z = 789;
+            var array = new[] { x, y, z };
+
+            var shift1 = array.Shift((t, h) => new { Shifted = t, Rest = h });
+            Assert.AreEqual(x, shift1.Shifted);
+            Assert.AreEqual(new[] { y, z }, shift1.Rest);
+
+            var shift2 = shift1.Rest.Shift((t, h) => new { Shifted = t, Rest = h });
+            Assert.AreEqual(y, shift2.Shifted);
+            Assert.AreEqual(new[] { z }, shift2.Rest);
+
+            var shift3 = shift2.Rest.Shift((t, h) => new { Shifted = t, Rest = h });
+            Assert.AreEqual(z, shift3.Shifted);
+            Assert.AreEqual(0, shift3.Rest.Length);
+        }
+
+        [TestCase(""           , "foo,bar,baz", "foo,bar,baz", 0)]
+        [TestCase("foo"        , "bar,baz"    , "foo,bar,baz", 1)]
+        [TestCase("foo,bar"    , "baz"        , "foo,bar,baz", 2)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 3)]
+        [TestCase("foo,bar,baz", ""           , "foo,bar,baz", 4)]
+
+        public void Shift(string shifted, string rest, string input, int count)
+        {
+            var r = Split(input).Shift(count, (t, h) => new { Shifted = t, Rest = h });
+            Assert.AreEqual(Split(shifted), r.Shifted);
+            Assert.AreEqual(Split(rest), r.Rest);
+        }
+
+        [Test]
+        public void ShiftOnEmptyReturnsSame()
+        {
+            var empty = new int[0];
+            var result = empty.Shift(10, (tail, head) => new { Shifted = tail, Rest = head });
+            Assert.AreEqual(0, result.Shifted.Length);
+            Assert.AreEqual(0, result.Rest.Length);
+        }
+    }
+}
