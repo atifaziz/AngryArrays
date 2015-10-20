@@ -20,12 +20,6 @@ namespace AngryArrays
 
     // ReSharper disable PartialTypeWithSinglePart
 
-    static class EmptyArray<T>
-    {
-        public static readonly T[] Value = new T[0];
-    }
-
-
     namespace Push
     {
         static partial class AngryArray
@@ -197,5 +191,10 @@ namespace AngryArrays
                 return (T[])array.Clone();
             }
         }
+    }
+
+    static class EmptyArray<T>
+    {
+        public static readonly T[] Value = new T[0];
     }
 }
