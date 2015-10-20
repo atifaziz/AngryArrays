@@ -4,9 +4,6 @@ Angry Arrays is a .NET library with extensions methods for arrays. Each method
 is designed to copy the source array, apply the requested modifications and
 return the result.
 
-Angry Arrays is available from NuGet as a [Portable Class Library][pclpkg]
-or a [single C# source][srcpkg] for direct inclusion in your project:
-
 Angry Arrays is available from NuGet in two formats:
 
   * [Portable Class Library][pclpkg]  
