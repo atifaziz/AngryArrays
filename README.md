@@ -118,6 +118,26 @@ You can also use an overload to say how many items to pop:
     Console.WriteLine(res);
     // { Popped = 5,6,7,8, Rest = 1,2,3,4 }
 
+**Beware** that following will throw `InvalidOperationException` because the
+array is empty and `t` will be undefined:
+
+    var res = new int[0].Pop((t, h) => new
+    {
+        Popped = t,
+        Rest   = string.Join(",", h)
+    });
+    Console.WriteLine(res); // This is never reached!
+
+However, calling the overload with a count of one won't throw and both `h` and
+`t` will be empty:
+
+    var res = new int[0].Pop(1, (t, h) => new
+    {
+        Popped = string.Join(",", t),
+        Rest   = string.Join(",", h)
+    });
+    Console.WriteLine(res);
+    // { Popped = , Rest = }
 
 ## Splice
 
