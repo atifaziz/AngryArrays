@@ -59,11 +59,11 @@ Prepends multiple items to the beginning of an array too:
 
 Removes the first item of an array:
 
-    var xs = new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Shift((h, t) => new
+    var res = new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Shift((h, t) => new
     {
         Shifted = h, Rest = string.Join(",", t)
     });
-    Console.WriteLine(string.Join(",", xs));
+    Console.WriteLine(res);
     // { Shifted = 1, Rest = 2,3,4,5,6,7,8 }
 
 ## Pop
@@ -71,21 +71,21 @@ Removes the first item of an array:
 Removes the last item of an array and returns the popped item as well as the
 a copy of the original array without the popped item:
 
-    var xs = new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Pop((t, h) => new
+    var res = new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Pop((t, h) => new
     {
         Popped = t, Rest = string.Join(",", h)
     });
-    Console.WriteLine(string.Join(",", xs));
+    Console.WriteLine(res);
     // { Popped = 8, Rest = 1,2,3,4,5,6,7 }
 
 You can also use an overload to say how many items to pop:
 
-    var xs = new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Pop(4, (t, h) => new
+    var res = new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Pop(4, (t, h) => new
     {
         Popped = string.Join(",", t),
         Rest   = string.Join(",", h)
     });
-    Console.WriteLine(string.Join(",", xs));
+    Console.WriteLine(res);
     // { Popped = 5,6,7,8, Rest = 1,2,3,4 }
 
 
@@ -100,30 +100,33 @@ index and count:
 
 You can also request the spliced array as well as the removed segment:
 
-    Console.WriteLine(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Splice(3, 2, (s, d) => new
+    var res = new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Splice(3, 2, (s, d) => new
     {
         Spliced = string.Join(",", s),
         Deleted = string.Join(",", d),
-    }));
+    });
+    Console.WriteLine(res);
     // { Spliced = 1,2,3,6,7,8, Deleted = 4,5 }
 
 Like in JavaScript, `Splice` allows negative values for the start index,
 meaning that many items from the end of the array:
 
-    Console.WriteLine(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Splice(-3, 2, (s, d) => new
+    var res = new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Splice(-3, 2, (s, d) => new
     {
         Spliced = string.Join(",", s),
         Deleted = string.Join(",", d),
-    }));
+    });
+    Console.WriteLine(res);
     // { Spliced = 1,2,3,4,5,8, Deleted = 6,7 }
 
 Omit the count and everything until the end of the array will be removed:
 
-    Console.WriteLine(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Splice(-4, (s, d) => new
+    var res = new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Splice(-4, (s, d) => new
     {
         Spliced = string.Join(",", s),
         Deleted = string.Join(",", d),
-    }));
+    });
+    Console.WriteLine(res);
     // { Spliced = 1,2,3,4, Deleted = 5,6,7,8 }
 
 ## Copy
