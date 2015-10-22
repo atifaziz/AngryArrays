@@ -33,7 +33,6 @@ Appends a new item at the end of an array:
     Console.WriteLine(string.Join(",", xs));
     // 1,2,3,4,5,6
 
-
 Append multiple items at the end of an array too:
 
     var xs = new[] { 1, 2, 3, 4, 5 }.Push(6, 7, 8);
@@ -48,7 +47,6 @@ Prepends a new item to the beginning of an array:
     Console.WriteLine(string.Join(",", xs));
     // 0,1,2,3,4,5
 
-
 Prepends multiple items to the beginning of an array too:
 
     var xs = new[] { 4, 5, 6, 7, 8 }.Unshift(1, 2, 3);
@@ -61,10 +59,42 @@ Removes the first item of an array:
 
     var res = new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Shift((h, t) => new
     {
-        Shifted = h, Rest = string.Join(",", t)
+        Shifted = h,
+        Rest    = string.Join(",", t)
     });
     Console.WriteLine(res);
     // { Shifted = 1, Rest = 2,3,4,5,6,7,8 }
+
+Remove several items from the head of an array:
+
+    var res = new[] { 1, 2, 3, 4, 5, 6, 7, 8 }.Shift(4, (h, t) => new
+    {
+        Shifted = string.Join(",", h),
+        Rest    = string.Join(",", t)
+    });
+    Console.WriteLine(res);
+    // { Shifted = 1,2,3,4, Rest = 5,6,7,8 }
+
+**Beware** that following will throw `InvalidOperationException` because the
+array is empty and `h` will be undefined:
+
+    var res = new int[0].Shift((h, t) => new
+    {
+        Shifted = h,
+        Rest    = string.Join(",", t)
+    });
+    Console.WriteLine(res); // This is never reached!
+
+However, calling the overload with a count of one won't throw and both `h` and
+`t` will be empty:
+
+    var res = new int[0].Shift(1, (h, t) => new
+    {
+        Shifted = string.Join(",", h),
+        Rest    = string.Join(",", t)
+    });
+    Console.WriteLine(res);
+    // { Shifted = , Rest = }
 
 ## Pop
 
