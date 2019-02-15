@@ -2,7 +2,7 @@
 
 Angry Arrays is a .NET library with extensions methods for arrays. Each method
 is designed to copy the source array, apply the requested modifications and
-return the result.
+return the result. Source array are considered to be immutable during method execution.
 
 Angry Arrays is available from NuGet in two formats:
 
