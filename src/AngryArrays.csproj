@@ -12,12 +12,12 @@
     <DefaultLanguage>en-us</DefaultLanguage>
     <PackageLicenseFile>COPYING.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/atifaziz/AngryArrays</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/atifaziz/AngryArrays.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageOutputPath>..\dist</PackageOutputPath>
     <IncludeSymbols>true</IncludeSymbols>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <ContinuousIntegrationBuild Condition="'$(CI.ToLowerInvariant())' == 'true'">true</ContinuousIntegrationBuild>
     <PackageReleaseNotes>See https://github.com/atifaziz/AngryArrays/releases/tag/v1.1.0</PackageReleaseNotes>
   </PropertyGroup>
 
@@ -30,6 +30,10 @@
 
   <ItemGroup>
     <None Include="..\COPYING.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
 
 </Project>
