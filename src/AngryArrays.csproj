@@ -15,7 +15,7 @@
     <RepositoryUrl>https://github.com/atifaziz/AngryArrays.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <PackageOutputPath>.\dist</PackageOutputPath>
+    <PackageOutputPath>..\dist</PackageOutputPath>
     <PackageReleaseNotes>See https://github.com/atifaziz/AngryArrays/releases/tag/v1.1.0</PackageReleaseNotes>
   </PropertyGroup>
 
