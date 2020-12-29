@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>AngryArrays</Title>
+    <TargetFrameworks>netstandard2.0;netstandard1.0</TargetFrameworks>
+    <VersionPrefix>1.1.0</VersionPrefix>
+    <Product>$(Title)</Product>
+    <Description>Extension methods for mostly modifying arrays.</Description>
+    <Copyright>Copyright &#169; 2015 Atif Aziz. All rights reserved.</Copyright>
+    <Authors>Atif Aziz</Authors>
+    <PackageTags>array;extensions</PackageTags>
+    <DefaultLanguage>en-us</DefaultLanguage>
+    <PackageLicenseFile>COPYING.txt</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/atifaziz/AngryArrays</PackageProjectUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageOutputPath>..\dist</PackageOutputPath>
+    <IncludeSymbols>true</IncludeSymbols>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <ContinuousIntegrationBuild Condition="'$(CI.ToLowerInvariant())' == 'true'">true</ContinuousIntegrationBuild>
+    <PackageReleaseNotes>See https://github.com/atifaziz/AngryArrays/releases/tag/v1.1.0</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\bin\Release\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\COPYING.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+  </ItemGroup>
+
+</Project>
