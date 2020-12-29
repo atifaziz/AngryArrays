@@ -16,6 +16,8 @@
     <RepositoryType>git</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageOutputPath>..\dist</PackageOutputPath>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReleaseNotes>See https://github.com/atifaziz/AngryArrays/releases/tag/v1.1.0</PackageReleaseNotes>
   </PropertyGroup>
 
