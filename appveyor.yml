@@ -4,6 +4,8 @@ image:
 - Ubuntu
 skip_commits:
   files:
+  - .gitignore
+  - .gitattributes
   - '*.md'
   - '*.txt'
 branches:
