@@ -6,9 +6,9 @@ return the result.
 
 Angry Arrays is available from NuGet in two formats:
 
-  * [Portable Class Library][pclpkg]  
+  * [.NET Standard Library][libpkg]  
     [![NuGet version](https://badge.fury.io/nu/AngryArrays.svg)](http://badge.fury.io/nu/AngryArrays)
-  * [Single C# source][srcpkg] for direct inclusion in your project:  
+  * ~~[Single C# source][srcpkg] for direct inclusion in your project:~~  
     [![NuGet version](https://badge.fury.io/nu/AngryArrays.Source.svg)](http://badge.fury.io/nu/AngryArrays.Source)
 
 Many of the extension methods are inspired from like-named [JavaScript
@@ -191,7 +191,7 @@ input array so a re-cast is not necessary:
 
 
 
-  [pclpkg]: https://www.nuget.org/packages/AngryArrays/
+  [libpkg]: https://www.nuget.org/packages/AngryArrays/
   [srcpkg]: https://www.nuget.org/packages/AngryArrays.Source/
   [jsarray]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
   [array-clone]: https://msdn.microsoft.com/en-us/library/system.array.clone%28v=vs.110%29.aspx
